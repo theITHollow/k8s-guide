@@ -1,0 +1,26 @@
+apiVersion: apps/v1 #version of the API to use
+kind: Deployment #What kind of object we're deploying
+metadata: #information about our object we're deploying
+  name: nginx-deployment #Name of the deployment
+  labels: #A tag on the deployments created
+    app: nginx
+spec: #specifications for our object
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: #Update Pods a certain number at a time
+      maxUnavailable: 1 #Total number of pods that can be unavailable at once
+      maxSurge: 1 #Maximum number of pods that can be deployed above desired state
+  replicas: 6 #The number of pods that should always be running
+  selector: #which pods the replica set should be responsible for
+    matchLabels:
+      app: nginx #any pods with labels matching this I'm responsible for.
+  template: #The pod template that gets deployed
+    metadata:
+      labels: #A tag on the replica sets created
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container #the name of the container within the pod
+        image: nginx:1.7.9 #which container image should be pulled
+        ports:
+        - containerPort: 80 #the port of the container within the pod

@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: vsphere-disk #name of the default storage class
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true" #Make this a default storage class. There can be only 1 or it won't work.
+provisioner: kubernetes.io/vsphere-volume
+parameters:
+  diskformat: thin

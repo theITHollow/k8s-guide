@@ -1,0 +1,5 @@
+---
+flask_dbpass: "Password123"
+flask_dbname: "taskapp"
+flask_dbuser: "taskapp"
+flask_dbhost: "10.233.4.87"

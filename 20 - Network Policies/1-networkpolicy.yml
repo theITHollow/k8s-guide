@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hollow-db-policy   #policy name
+spec:
+  podSelector:
+    matchLabels:
+      app: hollowdb  #pod applied to
+  policyTypes:
+  - Ingress #Ingress and/or Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: hollowapp #pod allowed
+    ports:
+    - protocol: TCP
+      port: 3306 #port allowed

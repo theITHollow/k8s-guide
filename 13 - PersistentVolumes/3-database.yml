@@ -1,0 +1,44 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: hollowdb 
+  labels: 
+    app: hollowdb
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels:
+      app: hollowdb
+  strategy:
+    type: Recreate 
+  template: 
+    metadata:
+      labels: 
+        app: hollowdb
+    spec:
+      containers:
+      - name: mysql 
+        image: theithollow/hollowapp-blog:dbv1 
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306 
+        volumeMounts:
+        - name: mysqlstorage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysqlstorage
+        persistentVolumeClaim:
+          claimName: mysqlvol
+---
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: hollowdb 
+spec: 
+  ports: 
+  - name: mysql
+    port: 3306
+    targetPort: 3306
+    protocol: TCP
+  selector: 
+    app: hollowdb

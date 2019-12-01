@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysqlvol
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi #Size of the volume
+  accessModes:
+    - ReadWriteOnce #type of access
+  hostPath:
+    path: "/mnt/data" #host location

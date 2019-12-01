@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escalated
+  labels:
+    app: escalated
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: escalated
+  template:
+    metadata:
+      labels:
+        app: escalated
+    spec:
+      containers:
+      - name: not-escalated
+        image: busybox
+        command: ["sleep", "3600"]
+        securityContext:
+          allowPrivilegeEscalation: true

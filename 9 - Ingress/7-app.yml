@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+      app: hollowapp
+  name: hollowapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hollowapp
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: hollowapp
+    spec:
+      containers:
+      - name: hollowapp
+        image: theithollow/hollowapp-blog:allin1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: SECRET_KEY
+          value: "my-secret-key"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hollowapp
+  labels:
+    app: hollowapp
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: hollowapp
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress #ingress resource
+metadata:
+  name: hollowapp
+  labels:
+    app: hollowapp
+spec:
+  rules:
+  - host: hollowapp.hollow.local #only match connections to hollowapp.hollow.local. 
+    http:
+      paths:
+      - path: / #root path
+        backend:
+          serviceName: hollowapp
+          servicePort: 5000

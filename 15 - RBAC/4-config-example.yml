@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Config
+preferences: {}
+users:
+- name: [user here]
+  user:
+    token: [client token here]
+clusters:
+- cluster:
+    certificate-authority-data: [client certificate here]
+    server: https://[ip or dns entry here for cluster:6443
+  name: [cluster name.local]
+contexts:
+- context:
+    cluster: [cluster name.local]
+    user: [user here]
+    namespace: [namespace]
+  name: [context name]
+current-context: [set context]
