@@ -49,7 +49,7 @@ metadata:
     app: hollowapp
 spec:
   rules:
-  - host: hollowapp.hollow.local #only match connections to hollowapp.hollow.local. 
+  - host: hollowapp.theithollowlab.com #only match connections to hollowapp.hollow.local. 
     http:
       paths:
       - path: / #root path
